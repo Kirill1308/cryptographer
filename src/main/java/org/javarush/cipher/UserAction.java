@@ -1,7 +1,7 @@
-package org.javarush.command;
+package org.javarush.cipher;
 
 public enum UserAction {
     ENCRYPT,
     DECRYPT,
-    BRUTE_FORCE
+    HACK
 }

@@ -1,13 +1,21 @@
-package org.javarush.command;
+package org.javarush.cipher.caesar.command;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.javarush.app.AppContext;
+import org.javarush.cipher.ActionCommand;
 import org.javarush.io.FileService;
 
-public class EncryptCommand implements ActionCommand {
+@Log4j2
+@AllArgsConstructor
+public class EncryptCaesarCommand implements ActionCommand {
     private static final FileService fileService = AppContext.getInstanceOf(FileService.class);
-
+    private final String filepath;
+    private final int key;
     @Override
-    public void execute(String filepath, int key) {
+    public void execute() {
+        log.info("Executing EncryptCaesarCommand...");
+
         System.out.println("Encrypting...");
         String content = fileService.read(filepath);
         String encryptedContent = encrypt(content, key);
@@ -16,8 +24,9 @@ public class EncryptCommand implements ActionCommand {
     }
 
     private String encrypt(String content, int key) {
-        StringBuilder encryptedText = new StringBuilder();
+        log.info("Encrypting content...");
 
+        StringBuilder encryptedText = new StringBuilder();
         for (char c : content.toCharArray()) {
             if (Character.isLetter(c)) {
                 char base = Character.isLowerCase(c) ? 'a' : 'A';

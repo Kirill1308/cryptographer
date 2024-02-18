@@ -1,29 +1,39 @@
-package org.javarush.command;
+package org.javarush.cipher.caesar.command;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.javarush.app.AppContext;
+import org.javarush.cipher.ActionCommand;
 import org.javarush.io.FileService;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class BruteForceCommand implements ActionCommand {
+@Log4j2
+@AllArgsConstructor
+public class HackCaesarCommand implements ActionCommand {
     private static final FileService fileService = AppContext.getInstanceOf(FileService.class);
+    private final String filepath;
 
     @Override
-    public void execute(String filepath, int key) {
+    public void execute() {
+        log.info("Executing HackCaesarCommand...");
         System.out.println("Brute forcing...");
+
         String content = fileService.read(filepath);
         String bruteForcedContent = bruteForce(content);
-        String destFilepath = DecryptCommand.generateDecryptedFilePath(filepath);
+        String destFilepath = DecryptCaesarCommand.generateDecryptedFilePath(filepath);
         fileService.write(destFilepath, bruteForcedContent);
     }
 
     private String bruteForce(String encryptedText) {
+        log.info("Brute forcing...");
+
         String bestDecryption = "";
         double bestScore = Double.MAX_VALUE;
 
         for (int shift = 1; shift <= 25; shift++) {
-            String decryption = DecryptCommand.decrypt(encryptedText, shift);
+            String decryption = DecryptCaesarCommand.decrypt(encryptedText, shift);
             double score = calculateFrequencyScore(decryption);
 
             if (score < bestScore) {

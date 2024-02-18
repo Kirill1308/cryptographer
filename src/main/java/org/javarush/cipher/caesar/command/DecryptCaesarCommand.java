@@ -1,14 +1,23 @@
-package org.javarush.command;
+package org.javarush.cipher.caesar.command;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.javarush.app.AppContext;
+import org.javarush.cipher.ActionCommand;
 import org.javarush.io.FileService;
 
-public class DecryptCommand implements ActionCommand {
+@Log4j2
+@AllArgsConstructor
+public class DecryptCaesarCommand implements ActionCommand {
     private static final FileService fileService = AppContext.getInstanceOf(FileService.class);
+    private final String filepath;
+    private final int key;
 
     @Override
-    public void execute(String filepath, int key) {
+    public void execute() {
+        log.info("Executing DecryptCaesarCommand...");
         System.out.println("Decrypting...");
+
         String content = fileService.read(filepath);
         String decryptedContent = decrypt(content, key);
         String destFilepath = generateDecryptedFilePath(filepath);
@@ -17,7 +26,6 @@ public class DecryptCommand implements ActionCommand {
 
     public static String decrypt(String content, int key) {
         StringBuilder decryptedText = new StringBuilder();
-
         for (char c : content.toCharArray()) {
             if (Character.isLetter(c)) {
                 char base = Character.isLowerCase(c) ? 'a' : 'A';
@@ -31,6 +39,8 @@ public class DecryptCommand implements ActionCommand {
     }
 
     public static String generateDecryptedFilePath(String filepath) {
+        log.info("Generating decrypted filepath...");
+
         final String DECRYPTED = "[DECRYPTED]";
         int startBracketIndex = filepath.indexOf('[');
         int endBracketIndex = filepath.lastIndexOf(']');
@@ -41,6 +51,7 @@ public class DecryptCommand implements ActionCommand {
             return preBracketContent + DECRYPTED + postBracketContent;
         }
 
+        log.error("Filepath does not contain brackets: " + filepath);
         throw new IllegalArgumentException("Filepath does not contain brackets: " + filepath);
     }
 }
