@@ -28,8 +28,6 @@ public class FileService implements IO {
         }
         return sb.toString();
     }
-
-
     @Override
     public void write(String filepath, String content) {
         log.info("Writing to file: " + filepath);

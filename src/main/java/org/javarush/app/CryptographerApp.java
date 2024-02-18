@@ -1,8 +1,8 @@
 package org.javarush.app;
 
-public class CaesarCipherApp {
+public class CryptographerApp {
     public static void main(String[] args) {
         Runner runner = new Runner();
-        runner.run();
+        runner.run(args);
     }
 }
