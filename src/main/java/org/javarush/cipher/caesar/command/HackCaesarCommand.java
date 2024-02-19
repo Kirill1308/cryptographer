@@ -18,16 +18,16 @@ public class HackCaesarCommand implements ActionCommand {
     @Override
     public void execute() {
         log.info("Executing HackCaesarCommand...");
-        System.out.println("Brute forcing...");
+        System.out.println("Hacking...");
 
         String content = fileService.read(filepath);
-        String bruteForcedContent = bruteForce(content);
+        String hackedContent = hack(content);
         String destFilepath = DecryptCaesarCommand.generateDecryptedFilePath(filepath);
-        fileService.write(destFilepath, bruteForcedContent);
+        fileService.write(destFilepath, hackedContent);
     }
 
-    private String bruteForce(String encryptedText) {
-        log.info("Brute forcing...");
+    private String hack(String encryptedText) {
+        log.info("Hacking...");
 
         String bestDecryption = "";
         double bestScore = Double.MAX_VALUE;

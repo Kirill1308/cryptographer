@@ -9,7 +9,7 @@ import org.javarush.cli.CLI;
 
 @Log4j2
 public final class Runner {
-    private static final CLI cli = AppContext.getInstanceOf(CLI.class);
+    private final CLI cli = AppContext.getInstanceOf(CLI.class);
 
     public void run(String[] args) {
         RunOperation runOperation;
