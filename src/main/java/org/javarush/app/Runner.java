@@ -5,20 +5,27 @@ import lombok.extern.log4j.Log4j2;
 import org.javarush.cipher.UserAction;
 import org.javarush.cipher.caesar.CaesarCipher;
 import org.javarush.cipher.Cipher;
+import org.javarush.cipher.incognito.IncognitoCipher;
 import org.javarush.cli.CLI;
 
 @Log4j2
 public final class Runner {
+    public static final String DEFAULT_COMMAND = "command";
     private final CLI cli = AppContext.getInstanceOf(CLI.class);
 
     public void run(String[] args) {
-        RunOperation runOperation;
-        if (args.length == 0) {
-            runOperation = new NoArgsRun();
+        if (args != null && (args.length > 0 && args.length < 4)) {
+            RunOperation runOperation;
+            if (DEFAULT_COMMAND.equalsIgnoreCase(args[0])) {
+                runOperation = new NoArgsRun();
+            } else {
+                runOperation = new ArgsRun(args);
+            }
+            runOperation.run();
         } else {
-            runOperation = new ArgsRun(args);
+            log.warn("Invalid usage. Please provide valid arguments.");
+            System.out.println("Invalid usage. Please provide valid arguments.");
         }
-        runOperation.run();
     }
 
     interface RunOperation {
@@ -36,7 +43,7 @@ public final class Runner {
             try {
                 command = UserAction.valueOf(cli.getCommand());
                 filepath = cli.getFilePath();
-                key = cli.getKey();
+                key = (command == UserAction.HACK) ? 0 : cli.getKey();
             } finally {
                 cli.closeScanner();
             }
@@ -51,14 +58,15 @@ public final class Runner {
         @Override
         public void run() {
             log.info("Running the application with args...");
+            try {
+                String command = args[0];
+                String filePath = args[1];
+                int key = (args.length == 3) ? Integer.parseInt(args[2]) : 0;
+                createAndExecuteCipher(UserAction.valueOf(command), filePath, key);
+            } catch (NumberFormatException ne) {
+                log.warn("Failed to parse key from command line arguments!", ne);
 
-            String command = args[0];
-            String filePath = args[1];
-            int key = 0;
-            if (args.length == 3) {
-                key = Integer.parseInt(args[2]);
             }
-            createAndExecuteCipher(UserAction.valueOf(command), filePath, key);
         }
     }
 

@@ -1,29 +1,28 @@
 package org.javarush.cipher.caesar.command;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.javarush.app.AppContext;
-import org.javarush.cipher.ActionCommand;
-import org.javarush.io.FileService;
+import org.javarush.io.FilePathHelper;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Log4j2
-@AllArgsConstructor
-public class HackCaesarCommand implements ActionCommand {
-    private static final FileService fileService = AppContext.getInstanceOf(FileService.class);
-    private final String filepath;
+public class HackCommand extends CaesarCommand {
+    public HackCommand(String filepath) {
+        super(filepath, 0);
+    }
 
     @Override
-    public void execute() {
-        log.info("Executing HackCaesarCommand...");
-        System.out.println("Hacking...");
+    protected String processContent(String content) {
+        return hack(content);
+    }
 
-        String content = fileService.read(filepath);
-        String hackedContent = hack(content);
-        String destFilepath = DecryptCaesarCommand.generateDecryptedFilePath(filepath);
-        fileService.write(destFilepath, hackedContent);
+    @Override
+    protected String getDestFilePath(String filepath) {
+        log.info("Generating hacked filepath...");
+        final String HACKED_TAG = "[HACKED]";
+
+        return FilePathHelper.generateTaggedFilePath(filepath, HACKED_TAG);
     }
 
     private String hack(String encryptedText) {
@@ -33,7 +32,7 @@ public class HackCaesarCommand implements ActionCommand {
         double bestScore = Double.MAX_VALUE;
 
         for (int shift = 1; shift <= 25; shift++) {
-            String decryption = DecryptCaesarCommand.decrypt(encryptedText, shift);
+            String decryption = DecryptCommand.decrypt(encryptedText, shift);
             double score = calculateFrequencyScore(decryption);
 
             if (score < bestScore) {
@@ -42,6 +41,7 @@ public class HackCaesarCommand implements ActionCommand {
             }
         }
 
+        System.out.println("Hacking complete!");
         return bestDecryption;
     }
 
@@ -57,9 +57,9 @@ public class HackCaesarCommand implements ActionCommand {
         }
 
         double score = 0.0;
-        for (char letter : frequencies.keySet()) {
-            double expectedFrequency = getExpectedFrequency(letter);
-            double observedFrequency = (double) frequencies.get(letter) / totalLetters;
+        for (Map.Entry<Character, Integer> letter : frequencies.entrySet()) {
+            double expectedFrequency = getExpectedFrequency(letter.getKey());
+            double observedFrequency = (double) frequencies.get(letter.getKey()) / totalLetters;
             score += Math.pow(expectedFrequency - observedFrequency, 2);
         }
 

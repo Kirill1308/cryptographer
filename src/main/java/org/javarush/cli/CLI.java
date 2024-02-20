@@ -14,6 +14,7 @@ public class CLI {
 
     public String getCommand() {
         do {
+            log.info("Enter command from user...");
             System.out.print("Enter command: ");
             String command = scanner.nextLine().toUpperCase();
             boolean isValid = Arrays.stream(UserAction.values()).anyMatch(v -> v.name().equalsIgnoreCase(command));
