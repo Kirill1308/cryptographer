@@ -1,16 +1,18 @@
 package org.javarush.cipher.caesar.command;
 
 import lombok.extern.log4j.Log4j2;
+import org.javarush.cipher.ActionCommand;
 import org.javarush.io.FilePathHelper;
 
 @Log4j2
-public class DecryptCommand extends CaesarCommand {
-    public DecryptCommand(String filepath, int key) {
+public class DecryptCaesarCommand extends ActionCommand {
+    public DecryptCaesarCommand(String filepath, int key) {
         super(filepath, key);
     }
 
     @Override
     protected String processContent(String content) {
+        System.out.println("Decryption complete!");
         return decrypt(content, key);
     }
 
@@ -33,7 +35,6 @@ public class DecryptCommand extends CaesarCommand {
             }
         }
 
-        System.out.println("Decryption complete!");
         return decryptedText.toString();
     }
 }

@@ -2,9 +2,7 @@ package org.javarush.io;
 
 import org.javarush.exception.FileReadException;
 import org.javarush.exception.FileWriteException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -38,7 +36,7 @@ class FileServiceTest {
     }
 
     @Test
-    void read_FileReadException() {
+    void read_fileReadException() {
 
         try (BufferedReader mockReader = mock(BufferedReader.class)) {
             when(mockReader.readLine()).thenThrow(new IOException());
@@ -46,9 +44,7 @@ class FileServiceTest {
             fail(e.getMessage());
         }
 
-        assertThrows(FileReadException.class, () -> {
-            fileService.read("path/to/non/existent/file");
-        });
+        assertThrows(FileReadException.class, () -> fileService.read("path/to/non/existent/file"));
     }
 
     @Test

@@ -5,7 +5,6 @@ import lombok.extern.log4j.Log4j2;
 import org.javarush.cipher.UserAction;
 import org.javarush.cipher.caesar.CaesarCipher;
 import org.javarush.cipher.Cipher;
-import org.javarush.cipher.incognito.IncognitoCipher;
 import org.javarush.cli.CLI;
 
 @Log4j2
@@ -58,15 +57,10 @@ public final class Runner {
         @Override
         public void run() {
             log.info("Running the application with args...");
-            try {
-                String command = args[0];
-                String filePath = args[1];
-                int key = (args.length == 3) ? Integer.parseInt(args[2]) : 0;
-                createAndExecuteCipher(UserAction.valueOf(command), filePath, key);
-            } catch (NumberFormatException ne) {
-                log.warn("Failed to parse key from command line arguments!", ne);
-
-            }
+            String command = args[0];
+            String filePath = args[1];
+            int key = (args.length == 3) ? Integer.parseInt(args[2]) : 0;
+            createAndExecuteCipher(UserAction.valueOf(command), filePath, key);
         }
     }
 

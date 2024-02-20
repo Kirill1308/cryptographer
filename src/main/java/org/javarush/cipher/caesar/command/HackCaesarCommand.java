@@ -1,19 +1,21 @@
 package org.javarush.cipher.caesar.command;
 
 import lombok.extern.log4j.Log4j2;
+import org.javarush.cipher.ActionCommand;
 import org.javarush.io.FilePathHelper;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Log4j2
-public class HackCommand extends CaesarCommand {
-    public HackCommand(String filepath) {
+public class HackCaesarCommand extends ActionCommand {
+    public HackCaesarCommand(String filepath) {
         super(filepath, 0);
     }
 
     @Override
     protected String processContent(String content) {
+        System.out.println("Hacking complete!");
         return hack(content);
     }
 
@@ -32,7 +34,7 @@ public class HackCommand extends CaesarCommand {
         double bestScore = Double.MAX_VALUE;
 
         for (int shift = 1; shift <= 25; shift++) {
-            String decryption = DecryptCommand.decrypt(encryptedText, shift);
+            String decryption = DecryptCaesarCommand.decrypt(encryptedText, shift);
             double score = calculateFrequencyScore(decryption);
 
             if (score < bestScore) {
@@ -41,7 +43,6 @@ public class HackCommand extends CaesarCommand {
             }
         }
 
-        System.out.println("Hacking complete!");
         return bestDecryption;
     }
 

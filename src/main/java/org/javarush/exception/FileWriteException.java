@@ -1,7 +1,6 @@
 package org.javarush.exception;
 
 public class FileWriteException extends RuntimeException {
-
     public FileWriteException(String message, Throwable cause) {
         super(message, cause);
     }
@@ -10,4 +9,3 @@ public class FileWriteException extends RuntimeException {
         super(message);
     }
 }
-

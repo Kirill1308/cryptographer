@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 class FileWriteExceptionTest {
     @Test
-    void fileWriteExceptionTest_singleParam() {
+    void fileWriteExceptionTest_message() {
         String errorMessage = "Test error message";
         FileWriteException ex = new FileWriteException(errorMessage);
 
@@ -17,7 +17,7 @@ class FileWriteExceptionTest {
     }
 
     @Test
-    void fileWriteExceptionTest_twoParam() {
+    void fileWriteExceptionTest_messageAndCause() {
         String errorMessage = "Test error message";
         Throwable cause = new Throwable("Test cause");
 

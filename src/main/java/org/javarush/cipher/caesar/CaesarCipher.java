@@ -8,6 +8,7 @@ import org.javarush.cipher.UserAction;
 @Log4j2
 public class CaesarCipher implements Cipher {
     private final CipherStrategy strategy;
+
     public CaesarCipher(UserAction command, String filepath, int key) {
         this.strategy = new CaesarCipherStrategy(command, filepath, key);
     }

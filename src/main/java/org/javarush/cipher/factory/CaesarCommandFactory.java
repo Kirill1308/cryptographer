@@ -1,23 +1,27 @@
 package org.javarush.cipher.factory;
 
-import lombok.AllArgsConstructor;
 import org.javarush.cipher.ActionCommand;
-import org.javarush.cipher.UserAction;
-import org.javarush.cipher.caesar.command.DecryptCommand;
-import org.javarush.cipher.caesar.command.EncryptCommand;
-import org.javarush.cipher.caesar.command.HackCommand;
+import org.javarush.cipher.caesar.command.DecryptCaesarCommand;
+import org.javarush.cipher.caesar.command.EncryptCaesarCommand;
+import org.javarush.cipher.caesar.command.HackCaesarCommand;
 
-@AllArgsConstructor
-public class CaesarCommandFactory implements CommandFactory {
-    private final String filepath;
-    private final int key;
+public class CaesarCommandFactory extends AbstractCommandFactory {
+    public CaesarCommandFactory(String filepath, int key) {
+        super(filepath, key);
+    }
 
     @Override
-    public ActionCommand createCommand(UserAction command) {
-        return switch (command) {
-            case ENCRYPT -> new EncryptCommand(filepath, key);
-            case DECRYPT -> new DecryptCommand(filepath, key);
-            case HACK -> new HackCommand(filepath);
-        };
+    protected ActionCommand createEncryptCommand() {
+        return new EncryptCaesarCommand(filepath, key);
+    }
+
+    @Override
+    protected ActionCommand createDecryptCommand() {
+        return new DecryptCaesarCommand(filepath, key);
+    }
+
+    @Override
+    protected ActionCommand createHackCommand() {
+        return new HackCaesarCommand(filepath);
     }
 }

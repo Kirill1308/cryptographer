@@ -14,7 +14,8 @@ public class CaesarCipherStrategy implements CipherStrategy {
 
     @Override
     public void execute() {
-        executeCommand(new CaesarCommandFactory(filepath, key).createCommand(command));
+        ActionCommand actionCommand = new CaesarCommandFactory(filepath, key).createCommand(command);
+        executeCommand(actionCommand);
     }
 
     private void executeCommand(ActionCommand command) {

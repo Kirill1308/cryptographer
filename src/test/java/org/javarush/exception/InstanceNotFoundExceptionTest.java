@@ -7,23 +7,23 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 class InstanceNotFoundExceptionTest {
     @Test
-    void testInstanceNotFoundException_WithMessage() {
-        String expectedMessage = "Test Message";
+    void instanceNotFoundException_message() {
+        String errorMessage = "Test error message";
 
-        InstanceNotFoundException instanceNotFoundException = new InstanceNotFoundException(expectedMessage);
+        InstanceNotFoundException instanceNotFoundException = new InstanceNotFoundException(errorMessage);
 
-        assertEquals(expectedMessage, instanceNotFoundException.getMessage());
+        assertEquals(errorMessage, instanceNotFoundException.getMessage());
         assertNull(instanceNotFoundException.getCause());
     }
 
     @Test
-    void testInstanceNotFoundException_WithMessageAndCause() {
-        String expectedMessage = "Test Message";
-        Throwable expectedCause = new RuntimeException("Cause");
+    void instanceNotFoundException_messageAndCause() {
+        String errorMessage = "Test error message";
+        Throwable cause = new Throwable("Test cause");
 
-        InstanceNotFoundException instanceNotFoundException = new InstanceNotFoundException(expectedMessage, expectedCause);
+        InstanceNotFoundException instanceNotFoundException = new InstanceNotFoundException(errorMessage, cause);
 
-        assertEquals(expectedMessage, instanceNotFoundException.getMessage());
-        assertEquals(expectedCause, instanceNotFoundException.getCause());
+        assertEquals(errorMessage, instanceNotFoundException.getMessage());
+        assertEquals(cause, instanceNotFoundException.getCause());
     }
 }

@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class EncryptCommandTest {
+class EncryptCaesarCommandTest {
     @Test
-    void processContent() {
+    void processContent_encryptSingleSpecialCharacter() {
         String testContent = "a";
         String expected = "d";
-        EncryptCommand encryptCommand = new EncryptCommand("", 3);
+        EncryptCaesarCommand encryptCommand = new EncryptCaesarCommand("", 3);
         String actual = encryptCommand.processContent(testContent);
         assertEquals(expected, actual, "Encrypted content doesn't match expected content");
 
