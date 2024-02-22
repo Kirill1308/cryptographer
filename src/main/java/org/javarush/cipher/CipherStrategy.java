@@ -1,5 +1,5 @@
 package org.javarush.cipher;
 
 public interface CipherStrategy {
-    void execute();
+    void execute(UserAction command, String filepath, int key);
 }

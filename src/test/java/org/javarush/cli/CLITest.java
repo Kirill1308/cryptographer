@@ -20,15 +20,16 @@ class CLITest {
 
         CLI cliInstance = new CLI();
 
-        String command = cliInstance.getCommand();
-        assertEquals(UserAction.ENCRYPT.name(), command);
+        UserAction command = cliInstance.getCommand();
+        assertEquals(UserAction.ENCRYPT, command);
 
         command = cliInstance.getCommand();
-        assertEquals(UserAction.DECRYPT.name(), command);
+        assertEquals(UserAction.DECRYPT, command);
 
         command = cliInstance.getCommand();
-        assertEquals(UserAction.HACK.name(), command);
+        assertEquals(UserAction.HACK, command);
     }
+
     @Test
     void getPath_withValidPath() {
         String pathInput = "src/main/resources/text.txt";

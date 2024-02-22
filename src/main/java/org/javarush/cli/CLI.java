@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class CLI {
     private final Scanner scanner = new Scanner(System.in);
 
-    public String getCommand() {
+    public UserAction getCommand() {
         do {
             log.info("Enter command from user...");
             System.out.print("Enter command: ");
@@ -20,7 +20,7 @@ public class CLI {
             String command = scanner.nextLine().toUpperCase();
             boolean isValid = Arrays.stream(UserAction.values()).anyMatch(v -> v.name().equalsIgnoreCase(command));
             if (isValid) {
-                return command;
+                return UserAction.valueOf(command);
             } else {
                 log.warn("User entered an invalid command!");
                 System.out.println("Invalid command! Please enter a valid command." + Arrays.toString(UserAction.values()));

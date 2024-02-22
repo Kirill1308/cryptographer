@@ -8,17 +8,9 @@ import org.javarush.cipher.factory.CaesarCommandFactory;
 
 @AllArgsConstructor
 public class CaesarCipherStrategy implements CipherStrategy {
-    private final UserAction command;
-    private final String filepath;
-    private final int key;
-
     @Override
-    public void execute() {
-        ActionCommand actionCommand = new CaesarCommandFactory(filepath, key).createCommand(command);
-        executeCommand(actionCommand);
-    }
-
-    private void executeCommand(ActionCommand command) {
-        command.execute();
+    public void execute(UserAction command, String filepath, int key) {
+        ActionCommand caesarCommand = new CaesarCommandFactory(filepath, key).createCommand(command);
+        caesarCommand.execute();
     }
 }
