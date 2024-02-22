@@ -9,7 +9,7 @@ import org.javarush.cipher.caesar.CaesarCipherStrategy;
 public final class Runner {
     public void run(String[] args) {
         CipherStrategy strategy = new CaesarCipherStrategy();
-        RunOperation runOperation = new NoArgsRun(strategy);
+        RunOperation runOperation = new ArgsRun(args, strategy);
         runOperation.run();
     }
 }
